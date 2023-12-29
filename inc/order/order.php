@@ -12,7 +12,9 @@ function landing_master_order() {
 			'post_author' => 1,
 		)
 	);
+    $_POST['order_code'] = random_int(99999999, 999999999);
 	update_post_meta( $order_id, 'order_data', $_POST );
+    wp_redirect( '/thankyou?order='.$order_id.'&code='.$_POST['order_code'],301 );
 }
 add_action( 'admin_post_nopriv_landing_master_order', 'landing_master_order' );
 add_action( 'admin_post_landing_master_order', 'landing_master_order' );
@@ -21,6 +23,7 @@ add_action( 'admin_post_landing_master_order', 'landing_master_order' );
 function landing_master_order_columns($columns) {
     $date = $columns['date'];
     unset($columns['date']);
+    $columns['total_price'] = 'Total Price';
     $columns['order_data'] = 'Order Data';
     $columns = array_merge($columns,array('date'=>$date));
     return $columns;
@@ -36,7 +39,13 @@ function landing_master_order_column_data($column, $post_id) {
                 echo '<strong>' .$key.'</strong> : '.$data . '<br />';
             }
             break;
-    }
+            case 'total_price':
+                $order_data = get_post_meta($post_id, 'order_data', true);
+                if(isset($order_data['total_price'])){
+                    echo $order_data['total_price'];
+                }
+                break;
+            }
 }
 add_action("manage_landing_master_order_posts_custom_column", "landing_master_order_column_data", 10, 2);
 

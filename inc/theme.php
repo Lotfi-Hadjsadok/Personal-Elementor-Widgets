@@ -45,6 +45,7 @@ function register_new_widgets( $widgets_manager ) {
 
 	if ( get_post_type() === 'product' ) {
 		require_once __DIR__ . '/elementor/product/product-price.php';
+		require_once __DIR__ . '/elementor/product/product-dynamic-price.php';
 		require_once __DIR__ . '/elementor/product/product-sale-price.php';
 		require_once __DIR__ . '/elementor/product/product-thumbnail.php';
 		require_once __DIR__ . '/elementor/product/product-title.php';
@@ -53,6 +54,7 @@ function register_new_widgets( $widgets_manager ) {
 		require_once __DIR__ . '/elementor/product/product-offers.php';
 
 		$widgets_manager->register( new \Elementor_Product_Price() );
+		$widgets_manager->register( new \Elementor_Product_Dynamic_Price() );
 		$widgets_manager->register( new \Elementor_Product_Sale_Price() );
 		$widgets_manager->register( new \Elementor_Product_Thumbnail() );
 		$widgets_manager->register( new \Elementor_Product_Title() );

@@ -64,6 +64,11 @@ class Elementor_Product_Offers extends \Elementor\Widget_Base {
 				'type'          => \Elementor\Controls_Manager::REPEATER,
 				'prevent_empty' => true,
 				'fields'        => $repeater->get_controls(),
+                'default'=>array(
+                    'offer_label'=>'Order 1',
+                    'offer_price'=>get_field('price'),
+                    'offer_sale_price'=>get_field('sale_price')
+                ),
 			)
 		);
 
@@ -167,12 +172,12 @@ class Elementor_Product_Offers extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'color_4',
+			'color_5',
 			array(
-				'label'     => esc_html__( 'Background', 'textdomain' ),
+				'label'     => esc_html__( 'Color', 'textdomain' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .radio_container' => 'background: {{VALUE}}',
+					'{{WRAPPER}} .radio_label' => 'Color: {{VALUE}}',
 				),
 			)
 		);
@@ -197,13 +202,7 @@ class Elementor_Product_Offers extends \Elementor\Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'content_typography_4',
-				'selector' => '{{WRAPPER}} .offer_sale_price',
-			)
-		);
+		
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_style_1',
@@ -266,6 +265,14 @@ class Elementor_Product_Offers extends \Elementor\Widget_Base {
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'content_typography_4',
+				'selector' => '{{WRAPPER}} .offer_sale_price',
+			)
+		);
+
 		$this->add_control(
 			'color_2',
 			array(
@@ -311,7 +318,7 @@ class Elementor_Product_Offers extends \Elementor\Widget_Base {
 				?>
 			<label class="radio_container">
 				<span class="radio_label"><?php echo $input['offer_label']; ?></span>
-				<input type="radio" <?php echo checked( $key, 0 ); ?> value="<?php echo $input['offer_price']; ?>" name="offer">
+				<input class="product_offer" data-sale_price="<?php echo $input['offer_sale_price']?>" type="radio" <?php echo checked( $key, 0 ); ?> value="<?php echo $input['offer_price']; ?>" name="offer">
 				<div class="prices">
 					<span class="offer_price <?php echo $input['offer_sale_price'] ? 'with_sale_price' : ''; ?>"><?php echo $settings['before_price'] . ' ' . $input['offer_price'] . ' ' . $settings['after_price']; ?></span>
 					<?php if ( $input['offer_sale_price'] ) : ?>
@@ -331,11 +338,14 @@ class Elementor_Product_Offers extends \Elementor\Widget_Base {
 			<# _.each( settings.offers, function( item,key ) { #>
 				<label class="radio_container">
 					<div class="radio_label">{{{item.offer_label}}}</div>
-					<input type="radio" value="{{{item.offer_price}}}" name="offer" {{key === 0 ? 'checked' : ''}} >
+					<input class="product_offer" data-sale_price="{{item.offer_sale_price}}" type="radio" value="{{{item.offer_price}}}" name="offer" {{key === 0 ? 'checked' : ''}} >
 					<div class="prices">
-						<span class="offer_price {{item.offer_sale_price ? 'with_sale_price' : ''}}">{{{settings.before_price}}} 2000 {{{settings.after_price}}}</span>
+                    <# if(item.offer_price){ #>
+						<span class="offer_price {{item.offer_sale_price ? 'with_sale_price' : ''}}">{{{settings.before_price}}} {{{item.offer_price}}} {{{settings.after_price}}}</span>
+					<# } #>
+						
 						<# if(item.offer_sale_price){ #>
-						<span class="offer_sale_price">{{{settings.before_price}}} 2000 {{{settings.after_price}}}</span>
+						<span class="offer_sale_price">{{{settings.before_price}}} {{{item.offer_sale_price}}} {{{settings.after_price}}}</span>
 						<# } #>
 					</div>
 					<span class="checkmark"></span>

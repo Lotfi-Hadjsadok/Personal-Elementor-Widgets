@@ -145,7 +145,7 @@ function landing_master_scripts() {
 
 	wp_enqueue_script( 'landing-master-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'landing-master-state-cities', get_template_directory_uri() . '/js/algeria_states.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'landing-master-states-options', get_template_directory_uri() . '/js/states-cities-options.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'landing-master-product-prices', get_template_directory_uri() . '/js/productPrices.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

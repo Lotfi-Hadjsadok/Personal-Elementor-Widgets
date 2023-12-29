@@ -325,6 +325,7 @@ class Elementor_Product_Order_Form extends \Elementor\Widget_Base {
 		if ( $settings['form'] ) {
 			echo '<form method="POST" class="order_form" action="' . admin_url( 'admin-post.php' ) . '">';
             echo '<input type="hidden" name="action" value="landing_master_order">';
+            echo '<input type="hidden" name="total_price">';
             echo '<input type="hidden" name="Product Title" value="'.get_the_title().'">';
 			foreach ( $settings['form'] as $input ) {
                 if($input['input_type'] == 'select'){
@@ -350,6 +351,7 @@ class Elementor_Product_Order_Form extends \Elementor\Widget_Base {
 		<# if ( settings.form.length ) { #>
 		<form method="POST" class="order_form" action="<?php echo admin_url( 'admin-post.php' ); ?>">
             <input type="hidden" name="action" value="landing_master_order">
+            <input type="hidden" name="total_price">
 			<# _.each( settings.form, function( item ) { #>
             <# if(item.input_type == 'select'){ #>
                 <select  class="elementor-repeater-item-{{item._id}}" name="{{{item.input_label}}}" >
